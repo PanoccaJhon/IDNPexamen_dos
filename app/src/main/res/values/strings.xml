@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">IDNPexamen_dos</string>
+    <string name="reiniciar">Reiniciar</string>
+    <string name="avanzar">Avanzar</string>
 </resources>
