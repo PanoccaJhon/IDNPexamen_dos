@@ -5,7 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 public class ProgressBarView extends View {
 
@@ -14,6 +17,14 @@ public class ProgressBarView extends View {
 
     public ProgressBarView(Context context) {
         super(context);
+        init();
+    }
+    public ProgressBarView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+    public ProgressBarView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         init();
     }
 
@@ -37,27 +48,34 @@ public class ProgressBarView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw( Canvas canvas) {
         super.onDraw(canvas);
 
-        int width = getWidth();
-        int height = getHeight();
-        int arrowWidth = width / 5;
+        int width = (int) (getWidth()*0.8);
+        int height = (int) (getHeight()*0.6);
+        int unitWidth = width / 5;
 
         for (int i = 0; i < stepCount; i++) {
-            float left = i * arrowWidth;
-            float right = left + arrowWidth;
-            float centerX = (left + right) / 2;
-
-            Path path = new Path();
-            path.moveTo(left, 0);
-            path.lineTo(right, 0);
-            path.lineTo(centerX, height);
-            path.close();
-
+            Path path = getPath(i, unitWidth, height);
             paint.setColor(Color.rgb(255 - i * 50, 100 + i * 30, 50 + i * 40));
             canvas.drawPath(path, paint);
         }
+    }
+
+    private static @NonNull Path getPath(int i, int arrowWidth, int height) {
+        float left = i * arrowWidth;
+        float right = left + arrowWidth-10;
+
+        Path path = new Path();
+        path.moveTo(left, 0);
+        path.lineTo(right, 0);
+        path.lineTo(right+ (float) arrowWidth /3, (float) height /2);
+        path.lineTo(right, height);
+        path.lineTo(left, height);
+        path.lineTo(left+ (float) arrowWidth /3, (float) height /2);
+        path.lineTo(left, 0);
+        path.close();
+        return path;
     }
 }
 

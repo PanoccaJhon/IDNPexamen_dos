@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    ProgressBarView canvas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        progressBar = findViewById(R.id.progress_bar);
+
+        ProgressBarView progressBar = findViewById(R.id.progressBarView);
         findViewById(R.id.button_reset).setOnClickListener(v -> progressBar.reset());
 
         findViewById(R.id.button_progress).setOnClickListener(v -> progressBar.advance());
